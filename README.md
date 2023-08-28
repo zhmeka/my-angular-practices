@@ -3,7 +3,7 @@
 ## Использование функции *inject()* для внедрения зависисимостей в компонент
 Код выглядит более декларативно и чисто. Работать с наследованием становится легче.
 
-**ПЛОХО**
+**Конструктор**
 
 ```ts
 export class AppComponent {
@@ -16,7 +16,7 @@ export class AppComponent {
 }
 ```
 
-**ХОРОШО**
+**Функция Inject()**
 
 ```ts
 export class AppComponent {
@@ -28,7 +28,7 @@ export class AppComponent {
 ```
 ------------
 
-**ПЛОХО**
+**Внедрение зависимостей в конструкторе и наследование**
 ```ts
 export class Foo {
   constructor(private readonly userService: UserService) {}
@@ -41,7 +41,7 @@ export class Bar extends Foo {
 }
 ```
 
-**ХОРОШО**
+**Внедрение зависимостей с использованием функции Inject() и наследование**
 
 ```ts
 export class Foo {
@@ -58,7 +58,7 @@ export class Bar extends Foo {
 ## Использование пайпа async везде, где это возможно
 Этот подход значительно сокращает количество кода и повышает читаемость. Так же отпадает нужда в контроле отписок, лишних состояниях и заботе о change detection.
 
-**ПЛОХО**
+**Явное использование subscribe()**
 
 ```ts
 @Component({
@@ -92,7 +92,7 @@ export class FilterListComponent implements OnInit, OnDestroy {
 }
 ```
 
-**ХОРОШО**
+**Пайп async**
 
 ```ts
 @Component({
@@ -179,7 +179,7 @@ export class FormComponent {
 ## Инжектирование констант в компоненты
 Помимо очевидного преймщуства с тестированием, этот подход так же является более гибким.
 
-**ПЛОХО**
+**Константа**
 
 ```ts
 // Файл с константой
@@ -189,7 +189,7 @@ export const COUNTRIES: ICountry[] = [];
 private readonly _countries: ICountry[] = COUNTRIES;
 ```
 
-**ХОРОШО**
+**Injection Token**
 
 ```ts
 // Файл с токеном
@@ -210,7 +210,7 @@ private readonly _countries: ICountry[] = inject(COUNTRIES);
 Альтернативы: pure-пайпы, вычисление значений напрямую, декомпозиция больших компонентов и т.д..
 
 
-**ПЛОХО**
+**Вызов метода в шаблоне**
 
 ```html
 <div *ngFor="let filter of filters">
@@ -218,7 +218,7 @@ private readonly _countries: ICountry[] = inject(COUNTRIES);
 </div>
 ```
 
-**ХОРОШО**
+**Использование pure-pipe**
 ```html
 <div *ngFor="let filter of filters">
   <div>{{ filter | filterValue }}</div>
